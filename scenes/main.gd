@@ -1,6 +1,6 @@
 extends Node3D
 
-@onready var character: Node3D = $Character
+@onready var character: Character = $Character
 @onready var map: Map = $ExampleMap
 
 var character_speed = 0.2
@@ -41,7 +41,23 @@ func _input(event: InputEvent) -> void:
 	tween.set_ease(Tween.EASE_OUT)
 	tween.set_trans(Tween.TRANS_CUBIC)
 	tween.tween_property(character, "global_position", Map.tile_to_v3(test_tile), character_speed)
-	character.rotation.y = -atan2(translation.y, translation.x) + deg_to_rad(90)
+	character.get_child(0).rotation.y = -atan2(translation.y, translation.x) + PI / 2
+	character.animation_player.play("sprint", -1, 2.0)
+	character.animation_player.seek(0.25)
+	character.animation_player.queue("idle")
+	
+	var collectibles = entities.filter(func (e): return NodeUtil.get_trait(e, Collectible))
+	for c in collectibles:
+		NodeUtil.remove_trait(c, Floaty)
+		var c_tween = create_tween()
+		c_tween.set_parallel(true)
+		c_tween.set_ease(Tween.EASE_OUT)
+		c_tween.set_trans(Tween.TRANS_CUBIC)
+		c_tween.tween_property(c.get_child(0), "rotation_degrees:y", 0, character_speed / 2).set_delay(character_speed / 2)
+		c_tween.tween_property(c.get_child(0), "position", Vector3.ZERO, character_speed / 2).set_delay(character_speed / 2)
+		c_tween.tween_property(c, "global_position", c.global_position + Vector3.UP, character_speed / 2).set_delay(character_speed / 2)
+		c_tween.set_parallel(false)
+		c_tween.tween_callback(func (): c.reparent(character))
 
 
 func get_input_translation(event: InputEvent):

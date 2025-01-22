@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://c2mu5dbs0ygi"]
+[gd_scene load_steps=21 format=3 uid="uid://c2mu5dbs0ygi"]
 
 [ext_resource type="Script" path="res://scenes/maps/map.gd" id="1_hb5q0"]
 [ext_resource type="PackedScene" uid="uid://cggv2aprcfaj7" path="res://entities/kenney_castle/wall.glb" id="1_y2fe7"]
@@ -15,10 +15,9 @@
 [ext_resource type="PackedScene" uid="uid://dbtti55rud61t" path="res://entities/kenney_castle/tree-log.glb" id="11_gbugb"]
 [ext_resource type="PackedScene" uid="uid://b81e0gv0t3sk0" path="res://entities/kenney_castle/tree-small.glb" id="11_qjkan"]
 [ext_resource type="PackedScene" uid="uid://d0bxx6ogqxu7l" path="res://entities/kenney_castle/rocks-large.glb" id="13_r8vpo"]
-[ext_resource type="Script" path="res://nodes/floaty.gd" id="17_gih1t"]
-[ext_resource type="PackedScene" uid="uid://btawul4jly88w" path="res://entities/key/key.blend" id="17_n1cjm"]
 [ext_resource type="PackedScene" uid="uid://cio1ma08e5rl0" path="res://entities/water/water.tscn" id="18_c14gt"]
 [ext_resource type="PackedScene" uid="uid://cr45uoqsdnjx5" path="res://entities/crate/crate.tscn" id="18_kx5qk"]
+[ext_resource type="PackedScene" uid="uid://cv1osundqy2lf" path="res://entities/key/Key.tscn" id="18_usl58"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3csol"]
 albedo_color = Color(0.682353, 0.482353, 0.341176, 1)
@@ -208,10 +207,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
 [node name="Crate2" parent="EntityGroup" instance=ExtResource("18_kx5qk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0)
 
-[node name="Floaty" type="Node3D" parent="EntityGroup" node_paths=PackedStringArray("target")]
-transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -6, 0.5, 0)
-script = ExtResource("17_gih1t")
-target = NodePath("key")
-bob_magnitude = 0.2
-
-[node name="key" parent="EntityGroup/Floaty" instance=ExtResource("17_n1cjm")]
+[node name="Key" parent="EntityGroup" instance=ExtResource("18_usl58")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0.5, 0)

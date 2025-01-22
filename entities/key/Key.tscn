@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://cv1osundqy2lf"]
+
+[ext_resource type="Script" path="res://nodes/floaty.gd" id="1_eyk03"]
+[ext_resource type="PackedScene" uid="uid://btawul4jly88w" path="res://entities/key/key.blend" id="2_a7dvh"]
+[ext_resource type="Script" path="res://nodes/collectible.gd" id="3_nu14k"]
+
+[node name="Key" type="Node3D"]
+
+[node name="key" parent="." instance=ExtResource("2_a7dvh")]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0, 0)
+
+[node name="Floaty" type="Node" parent="." node_paths=PackedStringArray("target")]
+script = ExtResource("1_eyk03")
+target = NodePath("../key")
+
+[node name="Collectible" type="Node" parent="."]
+script = ExtResource("3_nu14k")

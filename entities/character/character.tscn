@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://c542d4cls8to8"]
+
+[ext_resource type="PackedScene" uid="uid://1xccyecf6ijc" path="res://entities/kenney_arcade/character-gamer.glb" id="1_pldgo"]
+[ext_resource type="Script" path="res://entities/character/character.gd" id="2_k1221"]
+
+[node name="Character" instance=ExtResource("1_pldgo")]
+script = ExtResource("2_k1221")
+
+[node name="Skeleton3D" parent="character-gamer" index="0"]
+bones/4/rotation = Quaternion(0, 0, -0.382683, 0.92388)
+bones/5/rotation = Quaternion(0, 0, 0.382683, 0.92388)
+
+[node name="AnimationPlayer" parent="." index="1"]
+autoplay = "idle"

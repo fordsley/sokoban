@@ -1,4 +1,4 @@
-class_name Floaty extends Node3D
+class_name Floaty extends Node
 
 @export var target: Node3D
 @export var rotation_speed = -0.7
