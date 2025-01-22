@@ -208,9 +208,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
 [node name="Crate2" parent="EntityGroup" instance=ExtResource("18_kx5qk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0)
 
-[node name="Crate3" parent="EntityGroup" instance=ExtResource("18_kx5qk")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, -1, 0)
-
 [node name="Floaty" type="Node3D" parent="EntityGroup" node_paths=PackedStringArray("target")]
 transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -6, 0.5, 0)
 script = ExtResource("17_gih1t")
