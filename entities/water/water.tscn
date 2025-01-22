@@ -1,0 +1,63 @@
+[gd_scene load_steps=9 format=3 uid="uid://cio1ma08e5rl0"]
+
+[ext_resource type="Shader" path="res://shaders/water.gdshader" id="1_r45wh"]
+[ext_resource type="Script" path="res://entities/water/water.gd" id="1_wetlp"]
+[ext_resource type="Script" path="res://nodes/area_hazard.gd" id="3_yg544"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_mkwh1"]
+size = Vector2(2, 21)
+subdivide_width = 20
+subdivide_depth = 210
+orientation = 1
+
+[sub_resource type="Gradient" id="Gradient_x4s3w"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_7us7y"]
+noise_type = 3
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_fbqyd"]
+seamless = true
+as_normal_map = true
+color_ramp = SubResource("Gradient_x4s3w")
+noise = SubResource("FastNoiseLite_7us7y")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_q5ymd"]
+render_priority = 0
+shader = ExtResource("1_r45wh")
+shader_parameter/absorption_color = Color(1, 0.678431, 0, 1)
+shader_parameter/fresnel_radius = 1.0
+shader_parameter/fresnel_color = Color(0, 0.780392, 0.921569, 1)
+shader_parameter/roughness = 0.15
+shader_parameter/specular = 0.25
+shader_parameter/depth_distance = 25.0
+shader_parameter/beers_law = 8.0
+shader_parameter/displacement_strength = 0.3
+shader_parameter/displacement_scroll_speed = 0.1
+shader_parameter/displacement_scroll_offset = Vector2(-0.2, 0.3)
+shader_parameter/displacement_scale_offset = 0.5
+shader_parameter/displacement_scale = Vector2(0.04, 0.04)
+shader_parameter/edge_thickness = 0.3
+shader_parameter/edge_speed = 0.35
+shader_parameter/edge_noise_scale = Vector2(0.4, 0.4)
+shader_parameter/edge_noise = SubResource("NoiseTexture2D_fbqyd")
+shader_parameter/caustic_size = 2.0
+shader_parameter/caustic_range = 40.0
+shader_parameter/caustic_strength = 0.08
+shader_parameter/refraction_strength = 1.25
+shader_parameter/normal_map_strength = 1.0
+shader_parameter/scroll_speed = 0.3
+shader_parameter/scroll_offset = Vector2(0.1, -0.3)
+shader_parameter/scale_offset = 0.5
+shader_parameter/normal_map_scale = Vector2(0.1, 0.1)
+shader_parameter/wind_intensity = null
+shader_parameter/wind_direction = null
+
+[node name="Water" type="Node3D"]
+script = ExtResource("1_wetlp")
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("QuadMesh_mkwh1")
+surface_material_override/0 = SubResource("ShaderMaterial_q5ymd")
+
+[node name="AreaHazard" type="Node" parent="."]
+script = ExtResource("3_yg544")

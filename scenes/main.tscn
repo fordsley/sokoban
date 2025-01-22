@@ -1,0 +1,39 @@
+[gd_scene load_steps=7 format=3 uid="uid://bmnxqnpasg6k0"]
+
+[ext_resource type="PackedScene" uid="uid://c2mu5dbs0ygi" path="res://scenes/maps/example_map.tscn" id="1_1duth"]
+[ext_resource type="Script" path="res://scenes/main.gd" id="1_5q8is"]
+[ext_resource type="PackedScene" uid="uid://1xccyecf6ijc" path="res://entities/kenney_arcade/character-gamer.glb" id="2_lwxrw"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1j5fu"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_f3xkm"]
+sky_material = SubResource("ProceduralSkyMaterial_1j5fu")
+
+[sub_resource type="Environment" id="Environment_rawkk"]
+background_mode = 2
+sky = SubResource("Sky_f3xkm")
+ambient_light_source = 3
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_5q8is")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_rawkk")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.556296, 0.830985, 0, -0.830985, 0.556296, -2.5, 8, 4)
+fov = 50.0
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.189009, 0.981975, 0, -0.981975, 0.18901, 0, 5, 0)
+light_energy = 0.4
+shadow_enabled = true
+
+[node name="ExampleMap" parent="." instance=ExtResource("1_1duth")]
+
+[node name="Character" parent="." instance=ExtResource("2_lwxrw")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 1, 0, 0)

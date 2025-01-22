@@ -1,0 +1,42 @@
+[gd_scene load_steps=9 format=3 uid="uid://bw85upkuscvhr"]
+
+[ext_resource type="PackedScene" uid="uid://dbe45mf4wum7j" path="res://entities/kenney_castle/tower-top.glb" id="1_fncxo"]
+[ext_resource type="Texture2D" uid="uid://dshhiy3dne76j" path="res://entities/kenney_castle/palettes/variation-d.png" id="2_qu2tf"]
+[ext_resource type="PackedScene" uid="uid://d0bxx6ogqxu7l" path="res://entities/kenney_castle/rocks-large.glb" id="3_wtqx3"]
+[ext_resource type="PackedScene" uid="uid://d3niik1pi86w8" path="res://entities/kenney_castle/rocks-small.glb" id="4_l5o8m"]
+[ext_resource type="Shader" path="res://entities/portal/portal.gdshader" id="5_d7246"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_snwrs"]
+albedo_texture = ExtResource("2_qu2tf")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_45hv2"]
+render_priority = 0
+shader = ExtResource("5_d7246")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_cvlme"]
+material = SubResource("ShaderMaterial_45hv2")
+top_radius = 0.4
+bottom_radius = 0.4
+height = 0.1
+radial_segments = 12
+rings = 1
+
+[node name="Portal" type="Node3D"]
+
+[node name="tower-top2" parent="." instance=ExtResource("1_fncxo")]
+transform = Transform3D(0.883749, 2.04552e-08, 0.467961, 0.467961, -3.86299e-08, -0.883749, 0, 1, -4.37114e-08, 0, 0.6, 0)
+
+[node name="tower-top" parent="tower-top2" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_snwrs")
+
+[node name="rocks-large2" parent="." instance=ExtResource("3_wtqx3")]
+transform = Transform3D(-0.9, 0, 1.35896e-07, 0, 0.9, 0, -1.35896e-07, 0, -0.9, 0.296352, 0, 0.173838)
+
+[node name="rocks-small2" parent="." instance=ExtResource("4_l5o8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.36759, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.601178, 0)
+mesh = SubResource("CylinderMesh_cvlme")
+
+[editable path="tower-top2"]

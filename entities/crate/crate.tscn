@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://cr45uoqsdnjx5"]
+
+[ext_resource type="Script" path="res://nodes/movable.gd" id="2_2oehp"]
+[ext_resource type="PackedScene" uid="uid://phxb5r5cqqlq" path="res://entities/kenney_platformer/crate.glb" id="3_c2v8n"]
+
+[node name="Crate" type="Node3D"]
+
+[node name="Movable" type="Node" parent="."]
+script = ExtResource("2_2oehp")
+
+[node name="crate" parent="." instance=ExtResource("3_c2v8n")]
+transform = Transform3D(1.9, 0, 0, 0, 1.9, 0, 0, 0, 1.9, 0, 0, 0)
