@@ -1,17 +1,33 @@
-[gd_scene load_steps=9 format=3 uid="uid://bw85upkuscvhr"]
+[gd_scene load_steps=15 format=3 uid="uid://bw85upkuscvhr"]
 
 [ext_resource type="PackedScene" uid="uid://dbe45mf4wum7j" path="res://entities/kenney_castle/tower-top.glb" id="1_fncxo"]
 [ext_resource type="Texture2D" uid="uid://dshhiy3dne76j" path="res://entities/kenney_castle/palettes/variation-d.png" id="2_qu2tf"]
 [ext_resource type="PackedScene" uid="uid://d0bxx6ogqxu7l" path="res://entities/kenney_castle/rocks-large.glb" id="3_wtqx3"]
 [ext_resource type="PackedScene" uid="uid://d3niik1pi86w8" path="res://entities/kenney_castle/rocks-small.glb" id="4_l5o8m"]
 [ext_resource type="Shader" path="res://entities/portal/portal.gdshader" id="5_d7246"]
+[ext_resource type="Texture2D" uid="uid://oynwh8qr3t1h" path="res://entities/portal/rune-1.svg" id="6_a4g0b"]
+[ext_resource type="Texture2D" uid="uid://skchjqv3mh8p" path="res://entities/portal/rune-2.svg" id="7_uq5hp"]
+[ext_resource type="Texture2D" uid="uid://cc3r6c8rc2wyl" path="res://entities/portal/rune-3.svg" id="8_82871"]
+[ext_resource type="Texture2D" uid="uid://csbvunk01nqlk" path="res://entities/portal/rune-4.svg" id="9_epp8s"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_snwrs"]
 albedo_texture = ExtResource("2_qu2tf")
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_bm73t"]
+
+[sub_resource type="NoiseTexture3D" id="NoiseTexture3D_amnxv"]
+width = 256
+height = 256
+depth = 256
+seamless = true
+noise = SubResource("FastNoiseLite_bm73t")
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_45hv2"]
 render_priority = 0
 shader = ExtResource("5_d7246")
+shader_parameter/albedo1 = Color(0, 1, 1, 1)
+shader_parameter/albedo2 = Color(0.157778, 0.308262, 1, 1)
+shader_parameter/noise_tex = SubResource("NoiseTexture3D_amnxv")
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_cvlme"]
 material = SubResource("ShaderMaterial_45hv2")
@@ -38,5 +54,30 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.36759, 0, 0)
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.601178, 0)
 mesh = SubResource("CylinderMesh_cvlme")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(0.107687, 0.994185, 0, -0.994185, 0.107687, 0, 0, 0, 1, 0.432317, 0.636944, 0.131194)
+modulate = Color(0, 1, 1, 1)
+pixel_size = 0.0004
+double_sided = false
+texture = ExtResource("6_a4g0b")
+
+[node name="Sprite3D2" type="Sprite3D" parent="."]
+transform = Transform3D(-0.104598, -0.994515, 0, 0.994515, -0.104598, 0, 0, 0, 1, -0.432047, 0.562676, 0.13671)
+modulate = Color(0, 1, 1, 1)
+pixel_size = 0.0004
+texture = ExtResource("7_uq5hp")
+
+[node name="Sprite3D3" type="Sprite3D" parent="."]
+transform = Transform3D(0.994386, -0.105813, 0, 0.105813, 0.994386, 0, 0, 0, 1, -0.0427123, 1.03299, 0.133862)
+modulate = Color(0, 1, 1, 1)
+pixel_size = 0.0004
+texture = ExtResource("8_82871")
+
+[node name="Sprite3D4" type="Sprite3D" parent="."]
+transform = Transform3D(0.993762, -0.111521, 0, 0.111521, 0.993762, 0, 0, 0, 1, 0.0318336, 0.162452, 0.131756)
+modulate = Color(0, 1, 1, 1)
+pixel_size = 0.0004
+texture = ExtResource("9_epp8s")
 
 [editable path="tower-top2"]
