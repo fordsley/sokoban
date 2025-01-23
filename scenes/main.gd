@@ -2,15 +2,37 @@ extends Node3D
 
 @onready var character: Character = $Character
 @onready var map: Map = $ExampleMap
+@onready var gesture_listener: GestureListener = $GestureListener
 
 var character_speed = 0.2
 
 
+func _ready() -> void:
+	gesture_listener.tap.connect(func (_e):
+		var input_event = InputEventAction.new()
+		input_event.action = "jump"
+		input_event.pressed = true
+		Input.parse_input_event(input_event)
+	)
+	gesture_listener.swipe.connect(func (e: InputEventMouseButton):
+		var input_event = InputEventAction.new()
+		var angle = gesture_listener.swipe_start.position.angle_to_point(e.position)
+		var angle_snapped = int(rad_to_deg(snapped(angle, PI / 2)))
+		match angle_snapped:
+			-90: input_event.action = "up"
+			0: input_event.action = "right"
+			90: input_event.action = "down"
+			-180, 180: input_event.action = "left"
+		input_event.pressed = true
+		Input.parse_input_event(input_event)
+	)
+
+
 func _input(event: InputEvent) -> void:
-	var character_tile = Map.v3_to_tile(character.position)
 	var translation = get_input_translation(event)
 	if translation is not Vector2i: return
 
+	var character_tile = Map.v3_to_tile(character.position)
 	var test_tile = character_tile + translation
 	if map.is_wall(test_tile) or map.is_hazard(test_tile): return
 
@@ -68,6 +90,9 @@ func _input(event: InputEvent) -> void:
 
 
 func get_input_translation(event: InputEvent):
+	if event.is_action_pressed("jump"):
+		var v2 = Vector2.DOWN.rotated(-character.get_child(0).rotation.y)
+		return Vector2i(v2.x, v2.y)
 	if event.is_action_pressed("up"):
 		return Vector2i.UP
 	if event.is_action_pressed("right"):
