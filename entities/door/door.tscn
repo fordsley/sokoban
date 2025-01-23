@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://c6cg4ve8jckjw"]
+
+[ext_resource type="Script" path="res://entities/door/door.gd" id="1_6yglx"]
+[ext_resource type="PackedScene" uid="uid://d4ecjqafedy61" path="res://entities/kenney_castle/gate.glb" id="1_kes7o"]
+[ext_resource type="PackedScene" uid="uid://ddx8dkd847qk1" path="res://entities/lock/lock.blend" id="2_gbve6"]
+[ext_resource type="Script" path="res://nodes/lockable.gd" id="3_iyw2f"]
+
+[node name="Door" type="Node3D"]
+script = ExtResource("1_6yglx")
+
+[node name="Hinge" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 0, 0.5)
+
+[node name="Gate" parent="Hinge" instance=ExtResource("1_kes7o")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.4, 0, 0)
+
+[node name="Lock" parent="Hinge/Gate" instance=ExtResource("2_gbve6")]
+transform = Transform3D(-0.8, 0, 1.20797e-07, 0, 0.8, 0, -1.20797e-07, 0, -0.8, 0.0612781, 0.387598, 0)
+
+[node name="Lockable" type="Node" parent="."]
+script = ExtResource("3_iyw2f")

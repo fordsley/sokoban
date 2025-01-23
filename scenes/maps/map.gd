@@ -39,8 +39,7 @@ func is_wall(tile: Vector2i) -> bool:
 
 
 func is_hazard(tile: Vector2i) -> bool:
-	var entities = get_entities_at_tile(tile)
-	if entities.any(func (e): return NodeUtil.get_trait(e, Walkable)):
+	if get_entities_at_tile(tile).any(func (e: Node): return NodeUtil.get_trait(e, Walkable)):
 		return false
 	return _area_hazards.any(func (r: Rect2i): return r.has_point(tile))
 

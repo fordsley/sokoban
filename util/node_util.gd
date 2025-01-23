@@ -1,9 +1,10 @@
 class_name NodeUtil
 
+
 static func get_trait(parent: Node, Type: Script):
-	for child in parent.get_children():
-		if child.get_script() == Type:
-			return child
+	for node in parent.get_children():
+		if is_instance_of(node, Type):
+			return node
 
 
 static func remove_trait(parent: Node, Type: Script):
