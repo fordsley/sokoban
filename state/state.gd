@@ -2,18 +2,18 @@ class_name State extends Resource
 
 @export var entities: Array[EntityDef]
 
-var _wall_tiles: Array[Vector2i]
-var _area_hazards: Array[Rect2i]
+var wall_tiles: Array[Vector2i]
+var area_hazards: Array[Rect2i]
 
 
 func is_wall(tile: Vector2i) -> bool:
-	return _wall_tiles.has(tile)
+	return wall_tiles.has(tile)
 
 
 func is_hazard(tile: Vector2i) -> bool:
 	if get_entities_at_tile(tile).any(func (e: EntityDef): return e.get_attr(WalkableAttr)):
 		return false
-	return _area_hazards.any(func (r: Rect2i): return r.has_point(tile))
+	return area_hazards.any(func (r: Rect2i): return r.has_point(tile))
 
 
 func get_entities_at_tile(tile: Vector2i) -> Array[EntityDef]:
@@ -54,3 +54,4 @@ func try_move(entity_to_move: EntityDef, translation: Vector2i):
 						entities.erase(child)
 
 	entity_to_move.tile = test_tile
+	changed.emit()

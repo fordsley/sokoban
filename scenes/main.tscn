@@ -1,23 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://bmnxqnpasg6k0"]
+[gd_scene load_steps=3 format=3 uid="uid://bmnxqnpasg6k0"]
 
 [ext_resource type="PackedScene" uid="uid://c2mu5dbs0ygi" path="res://scenes/maps/example_map.tscn" id="1_1duth"]
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_5q8is"]
-[ext_resource type="Script" path="res://state/entities/_entity_def.gd" id="2_ajn40"]
-[ext_resource type="Script" path="res://state/state.gd" id="3_gwybq"]
-[ext_resource type="Script" path="res://state/attr/_attr.gd" id="3_rc845"]
-[ext_resource type="Script" path="res://state/entities/player_def.gd" id="4_6wt77"]
-
-[sub_resource type="Resource" id="Resource_xt2gw"]
-script = ExtResource("4_6wt77")
-tile = Vector2i(0, 0)
-attrs = Array[ExtResource("3_rc845")]([])
-
-[sub_resource type="Resource" id="Resource_21kdp"]
-script = ExtResource("3_gwybq")
-entities = Array[ExtResource("2_ajn40")]([SubResource("Resource_xt2gw")])
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_5q8is")
-state = SubResource("Resource_21kdp")
 
 [node name="ExampleMap" parent="." instance=ExtResource("1_1duth")]

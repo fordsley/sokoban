@@ -43,7 +43,29 @@ func _input(event: InputEvent) -> void:
 	if translation is Vector2i:
 		var player = get_player_mf.fn(state)
 		state.try_move(player, translation)
-		print({ 'state': state })
+
+
+func get_component(e: EntityDef):
+	if e is CrateDef: return preload("res://entities/kenney_platformer/crate.glb")
+	if e is KeyDef: return preload("res://entities/key/Key.tscn")
+	if e is DoorDef: return preload("res://entities/door/door.tscn")
+	if e is PlayerDef: return preload("res://entities/character/character.tscn")
+
+
+func update():
+	var v_nodes: Array[VNode]
+	v_nodes.assign(state.entities.map(func (e: EntityDef):
+		var type = get_component(e)
+		if !type: return
+		return VNode.create(type, e.id, func (n: Node3D):
+			n.position = tile_to_v3(e.tile)
+			if e is CrateDef:
+				n.scale = Vector3(1.9, 1.9, 1.9)
+			elif e is KeyDef:
+				n.position.y += 0.5
+		)
+	))
+	VNode.reconcile(entity_group, v_nodes)
 
 
 func get_input_translation(event: InputEvent):
@@ -63,7 +85,9 @@ func get_input_translation(event: InputEvent):
 
 func get_wall_tiles() -> Array[Vector2i]:
 	var walls = wall_group.get_children()
-	return walls.map(func (w: Node3D): return v3_to_tile(w.position))
+	var wall_tiles: Array[Vector2i]
+	wall_tiles.assign(walls.map(func (w: Node3D): return v3_to_tile(w.position)))
+	return wall_tiles
 
 
 func get_area_hazards() -> Array[Rect2i]:

@@ -1,18 +1,28 @@
-[gd_scene load_steps=26 format=3 uid="uid://c2mu5dbs0ygi"]
+[gd_scene load_steps=48 format=3 uid="uid://c2mu5dbs0ygi"]
 
 [ext_resource type="Script" path="res://scenes/maps/map.gd" id="1_hb5q0"]
 [ext_resource type="PackedScene" uid="uid://cggv2aprcfaj7" path="res://entities/kenney_castle/wall.glb" id="1_y2fe7"]
 [ext_resource type="Script" path="res://state/entities/_entity_def.gd" id="2_e4u0k"]
 [ext_resource type="PackedScene" uid="uid://dewxviko6kc7j" path="res://entities/kenney_castle/ground.glb" id="2_yawvx"]
+[ext_resource type="Script" path="res://state/attr/_attr.gd" id="3_35k2h"]
 [ext_resource type="PackedScene" uid="uid://cmwsrsb5b6vn4" path="res://entities/kenney_castle/wall-corner-half-tower.glb" id="3_87kc3"]
+[ext_resource type="Script" path="res://state/entities/crate_def.gd" id="4_1ip4o"]
 [ext_resource type="PackedScene" uid="uid://dj1mirjbejc8u" path="res://entities/kenney_castle/wall-narrow-gate.glb" id="4_2twep"]
+[ext_resource type="Script" path="res://state/attr/pushable_attr.gd" id="4_ecxfi"]
+[ext_resource type="Script" path="res://state/entities/key_def.gd" id="5_ym065"]
+[ext_resource type="Script" path="res://state/entities/door_def.gd" id="6_lvkee"]
+[ext_resource type="Script" path="res://state/attr/unlocker_attr.gd" id="6_mlakx"]
 [ext_resource type="PackedScene" uid="uid://cqvmba6mdy50m" path="res://entities/kenney_castle/tower-square-top.glb" id="7_0qhuy"]
+[ext_resource type="Script" path="res://state/entities/portal_def.gd" id="7_4vd2u"]
 [ext_resource type="PackedScene" uid="uid://cio31ipi156e8" path="res://entities/kenney_castle/wall-half.glb" id="7_17rkf"]
-[ext_resource type="PackedScene" uid="uid://bw85upkuscvhr" path="res://entities/portal/portal.tscn" id="9_scpvo"]
+[ext_resource type="Script" path="res://state/attr/lockable_attr.gd" id="8_a4st0"]
+[ext_resource type="Script" path="res://state/entities/player_def.gd" id="8_qwe1k"]
 [ext_resource type="PackedScene" uid="uid://ddr8fi8qrts26" path="res://entities/kenney_castle/tree-trunk.glb" id="10_f152l"]
 [ext_resource type="PackedScene" uid="uid://c7hunhcgtifi3" path="res://entities/kenney_castle/tree-large.glb" id="10_w2ruf"]
 [ext_resource type="PackedScene" uid="uid://dbtti55rud61t" path="res://entities/kenney_castle/tree-log.glb" id="11_gbugb"]
 [ext_resource type="PackedScene" uid="uid://b81e0gv0t3sk0" path="res://entities/kenney_castle/tree-small.glb" id="11_qjkan"]
+[ext_resource type="Script" path="res://state/attr/controllable_attr.gd" id="11_xdfbd"]
+[ext_resource type="Script" path="res://state/attr/inventory_attr.gd" id="12_vwtbf"]
 [ext_resource type="PackedScene" uid="uid://d0bxx6ogqxu7l" path="res://entities/kenney_castle/rocks-large.glb" id="13_r8vpo"]
 [ext_resource type="PackedScene" uid="uid://c6cg4ve8jckjw" path="res://entities/door/door.tscn" id="17_iay0n"]
 [ext_resource type="PackedScene" uid="uid://cio1ma08e5rl0" path="res://entities/water/water.tscn" id="18_c14gt"]
@@ -20,6 +30,54 @@
 [ext_resource type="PackedScene" uid="uid://cv1osundqy2lf" path="res://entities/key/Key.tscn" id="18_usl58"]
 [ext_resource type="PackedScene" uid="uid://c542d4cls8to8" path="res://entities/character/character.tscn" id="21_hgqcp"]
 [ext_resource type="Script" path="res://nodes/gesture_listener.gd" id="22_if6rj"]
+
+[sub_resource type="Resource" id="Resource_s516s"]
+script = ExtResource("4_ecxfi")
+
+[sub_resource type="Resource" id="Resource_sl34a"]
+script = ExtResource("4_1ip4o")
+tile = Vector2i(-1, 0)
+attrs = Array[ExtResource("3_35k2h")]([SubResource("Resource_s516s")])
+
+[sub_resource type="Resource" id="Resource_howhc"]
+script = ExtResource("4_ecxfi")
+
+[sub_resource type="Resource" id="Resource_jc3hy"]
+script = ExtResource("4_1ip4o")
+tile = Vector2i(-2, 0)
+attrs = Array[ExtResource("3_35k2h")]([SubResource("Resource_howhc")])
+
+[sub_resource type="Resource" id="Resource_wpjjp"]
+script = ExtResource("6_mlakx")
+
+[sub_resource type="Resource" id="Resource_b8grr"]
+script = ExtResource("5_ym065")
+tile = Vector2i(-6, 0)
+attrs = Array[ExtResource("3_35k2h")]([SubResource("Resource_wpjjp")])
+
+[sub_resource type="Resource" id="Resource_xbubk"]
+script = ExtResource("8_a4st0")
+
+[sub_resource type="Resource" id="Resource_1njf2"]
+script = ExtResource("6_lvkee")
+tile = Vector2i(1, -2)
+attrs = Array[ExtResource("3_35k2h")]([SubResource("Resource_xbubk")])
+
+[sub_resource type="Resource" id="Resource_men7h"]
+script = ExtResource("7_4vd2u")
+tile = Vector2i(1, -5)
+attrs = Array[ExtResource("3_35k2h")]([])
+
+[sub_resource type="Resource" id="Resource_1wffx"]
+script = ExtResource("11_xdfbd")
+
+[sub_resource type="Resource" id="Resource_t4fid"]
+script = ExtResource("12_vwtbf")
+
+[sub_resource type="Resource" id="Resource_x8oc6"]
+script = ExtResource("8_qwe1k")
+tile = Vector2i(1, 0)
+attrs = Array[ExtResource("3_35k2h")]([SubResource("Resource_1wffx"), SubResource("Resource_t4fid")])
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_5lotx"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -42,9 +100,9 @@ albedo_color = Color(0.682353, 0.482353, 0.341176, 1)
 material = SubResource("StandardMaterial3D_3csol")
 size = Vector2(1, 1)
 
-[node name="ExampleLevel" type="Node3D"]
+[node name="ExampleMap" type="Node3D"]
 script = ExtResource("1_hb5q0")
-initial_entities = Array[ExtResource("2_e4u0k")]([null])
+initial_entities = Array[ExtResource("2_e4u0k")]([SubResource("Resource_sl34a"), SubResource("Resource_jc3hy"), SubResource("Resource_b8grr"), SubResource("Resource_1njf2"), SubResource("Resource_men7h"), SubResource("Resource_x8oc6")])
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_jq5bw")
@@ -241,7 +299,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0.5, 0)
 [node name="Door" parent="EntityGroup" instance=ExtResource("17_iay0n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -2)
 
-[node name="Portal" parent="EntityGroup" instance=ExtResource("9_scpvo")]
-transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 1, 0, -5)
-
 [node name="Character" parent="EntityGroup" instance=ExtResource("21_hgqcp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
