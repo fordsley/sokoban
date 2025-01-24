@@ -1,26 +1,74 @@
 class_name Map extends Node3D
 
+@export var initial_entities: Array[EntityDef]
+
+var state: State
+
+var get_player_mf := MemoizedFn.create(func (s: State) -> EntityDef:
+	for e in s.entities:
+		if e is PlayerDef:
+			return e
+	return null
+)
+
 @onready var wall_group: Node = $WallGroup
 @onready var hazard_group: Node = $HazardGroup
 @onready var entity_group: Node = $EntityGroup
-
-var _wall_tiles: Array[Vector2i]
-var _area_hazards: Array[Rect2i]
-
-
-static func tile_to_v3(tile: Vector2i) -> Vector3:
-	return Vector3(tile.x, 0, tile.y)
-
-
-static func v3_to_tile(v3: Vector3) -> Vector2i:
-	return Vector2i(round(v3.x), round(v3.z))
+@onready var gesture_listener: GestureListener = $GestureListener
 
 
 func _ready() -> void:
-	var walls = wall_group.get_children()
-	_wall_tiles.assign(walls.map(func (w: Node3D): return v3_to_tile(w.position)))
+	gesture_listener.tap.connect(func (_e):
+		var input_event = InputEventAction.new()
+		input_event.action = "jump"
+		input_event.pressed = true
+		Input.parse_input_event(input_event)
+	)
+	gesture_listener.swipe.connect(func (e: InputEventMouseButton):
+		var input_event = InputEventAction.new()
+		var angle = gesture_listener.swipe_start.position.angle_to_point(e.position)
+		var angle_snapped = int(rad_to_deg(snapped(angle, PI / 2)))
+		match angle_snapped:
+			-90: input_event.action = "up"
+			0: input_event.action = "right"
+			90: input_event.action = "down"
+			-180, 180: input_event.action = "left"
+		input_event.pressed = true
+		Input.parse_input_event(input_event)
+	)
 
+
+func _input(event: InputEvent) -> void:
+	var translation = get_input_translation(event)
+	if translation is Vector2i:
+		var player = get_player_mf.fn(state)
+		state.try_move(player, translation)
+		print({ 'state': state })
+
+
+func get_input_translation(event: InputEvent):
+	if event.is_action_pressed("jump"):
+		var player = get_player_mf.fn(state)
+		return player.facing if PlayerDef else null
+	if event.is_action_pressed("up"):
+		return Vector2i.UP
+	if event.is_action_pressed("right"):
+		return Vector2i.RIGHT
+	if event.is_action_pressed("down"):
+		return Vector2i.DOWN
+	if event.is_action_pressed("left"):
+		return Vector2i.LEFT
+	return null
+
+
+func get_wall_tiles() -> Array[Vector2i]:
+	var walls = wall_group.get_children()
+	return walls.map(func (w: Node3D): return v3_to_tile(w.position))
+
+
+func get_area_hazards() -> Array[Rect2i]:
 	var hazards = hazard_group.get_children()
+	var area_hazards: Array[Rect2i]
 	for hazard in hazards:
 		for child in hazard.get_children():
 			if child is AreaHazard:
@@ -31,18 +79,13 @@ func _ready() -> void:
 					child.size.x,
 					child.size.y,
 				)
-				_area_hazards.append(rect)
+				area_hazards.append(rect)
+	return area_hazards
 
 
-func is_wall(tile: Vector2i) -> bool:
-	return _wall_tiles.has(tile)
+static func tile_to_v3(tile: Vector2i) -> Vector3:
+	return Vector3(tile.x, 0, tile.y)
 
 
-func is_hazard(tile: Vector2i) -> bool:
-	if get_entities_at_tile(tile).any(func (e: Node): return NodeUtil.get_trait(e, Walkable)):
-		return false
-	return _area_hazards.any(func (r: Rect2i): return r.has_point(tile))
-
-
-func get_entities_at_tile(tile: Vector2i) -> Array[Node]:
-	return entity_group.get_children().filter(func (e: Node3D): return v3_to_tile(e.position) == tile)
+static func v3_to_tile(v3: Vector3) -> Vector2i:
+	return Vector2i(round(v3.x), round(v3.z))
