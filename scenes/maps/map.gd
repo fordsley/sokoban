@@ -63,6 +63,9 @@ func update():
 				n.scale = Vector3(1.9, 1.9, 1.9)
 			elif e is KeyDef:
 				n.position.y += 0.5
+
+			if e.get_attr(SunkAttr):
+				n.position.y -= 1
 		)
 	))
 	VNode.reconcile(entity_group, v_nodes)

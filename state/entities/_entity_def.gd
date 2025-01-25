@@ -10,14 +10,11 @@ static var _counter := 0
 
 func _get_id() -> String:
 	_counter += 1
-	return ''.join([_get_name(), str(_counter)])
+	return ''.join([ClassType.get_class_name(self), str(_counter)])
 
 
-func _get_name() -> String:
-	var s: Script = get_script()
-	if s is Script:
-		return s.get_global_name()
-	return ''
+func reset():
+	pass
 
 
 func get_attr(attr: Script) -> Variant:

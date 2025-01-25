@@ -1,6 +1,6 @@
 class_name DoorDef extends EntityDef
 
-func _init() -> void:
+func reset():
 	attrs = [
 		LockableAttr.new(),
 	]

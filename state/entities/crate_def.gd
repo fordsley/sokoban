@@ -1,6 +1,6 @@
 class_name CrateDef extends EntityDef
 
-func _init() -> void:
+func reset() -> void:
 	attrs = [
 		PushableAttr.new(),
 	]

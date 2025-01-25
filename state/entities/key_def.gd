@@ -1,6 +1,7 @@
 class_name KeyDef extends EntityDef
 
-func _init() -> void:
+func reset():
 	attrs = [
+		CollectibleAttr.new(),
 		UnlockerAttr.new(),
 	]

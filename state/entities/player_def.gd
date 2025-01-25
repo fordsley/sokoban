@@ -2,8 +2,7 @@ class_name PlayerDef extends EntityDef
 
 var facing := Vector2i.DOWN
 
-func _init() -> void:
+func reset() -> void:
 	attrs = [
-		ControllableAttr.new(),
 		InventoryAttr.new(),
 	]

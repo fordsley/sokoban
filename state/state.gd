@@ -35,13 +35,13 @@ func try_move(entity_to_move: EntityDef, translation: Vector2i):
 					return
 				other.tile = pushable_test_tile
 				if is_hazard(pushable_test_tile):
-					other.del_attr(Movable)
+					other.del_attr(PushableAttr)
 					other.attrs.append_array([SunkAttr.new(), WalkableAttr.new()])
 
 			elif child is LockableAttr:
 				if child.locked:
 					var unlocker = InventoryAttr.get_item(entity_to_move, UnlockerAttr)
-					if unlocker is Unlocker:
+					if unlocker is UnlockerAttr:
 						unlocker.used = true
 						child.locked = false
 				if child.locked:
@@ -50,8 +50,8 @@ func try_move(entity_to_move: EntityDef, translation: Vector2i):
 			elif child is CollectibleAttr:
 				var inventory = entity_to_move.get_attr(InventoryAttr)
 				if inventory is InventoryAttr:
-					if inventory.add_if_room(child):
-						entities.erase(child)
+					if inventory.add_if_room(other):
+						entities.erase(other)
 
 	entity_to_move.tile = test_tile
 	changed.emit()
