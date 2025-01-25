@@ -1,7 +1,7 @@
 class_name EntityDef extends Resource
 
 @export var tile: Vector2i
-@export var attrs: Array[Attr]
+@export_storage var attrs: Array[Attr]
 
 var id: String = _get_id()
 

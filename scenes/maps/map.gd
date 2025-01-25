@@ -4,6 +4,22 @@ class_name Map extends Node3D
 
 var state: State
 
+var reconciler := Reconciler.create(func (e: EntityDef):
+	var type := get_component(e)
+	var n := reconciler.get_or_create(type, e.id)
+
+	n.position = tile_to_v3(e.tile)
+	if e is CrateDef:
+		n.scale = Vector3(1.9, 1.9, 1.9)
+	elif e is KeyDef:
+		n.position.y += 0.5
+
+	if e.get_attr(SunkAttr):
+		n.position.y -= 1
+
+	return n
+)
+
 var get_player_mf := MemoizedFn.create(func (s: State) -> EntityDef:
 	for e in s.entities:
 		if e is PlayerDef:
@@ -45,30 +61,16 @@ func _input(event: InputEvent) -> void:
 		state.try_move(player, translation)
 
 
-func get_component(e: EntityDef):
+func get_component(e: EntityDef) -> Object:
 	if e is CrateDef: return preload("res://entities/kenney_platformer/crate.glb")
 	if e is KeyDef: return preload("res://entities/key/Key.tscn")
 	if e is DoorDef: return preload("res://entities/door/door.tscn")
 	if e is PlayerDef: return preload("res://entities/character/character.tscn")
+	return Node3D
 
 
 func update():
-	var v_nodes: Array[VNode]
-	v_nodes.assign(state.entities.map(func (e: EntityDef):
-		var type = get_component(e)
-		if !type: return
-		return VNode.create(type, e.id, func (n: Node3D):
-			n.position = tile_to_v3(e.tile)
-			if e is CrateDef:
-				n.scale = Vector3(1.9, 1.9, 1.9)
-			elif e is KeyDef:
-				n.position.y += 0.5
-
-			if e.get_attr(SunkAttr):
-				n.position.y -= 1
-		)
-	))
-	VNode.reconcile(entity_group, v_nodes)
+	reconciler.reconcile(entity_group, state.entities)
 
 
 func get_input_translation(event: InputEvent):
